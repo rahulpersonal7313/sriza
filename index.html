@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Sriza ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --midnight: #020617;
+            --royal: #1e3a8a;
+            --cyan: #22d3ee;
+            --glass: rgba(255, 255, 255, 0.1);
+            --border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at center, var(--royal) 0%, var(--midnight) 100%);
+            overflow: hidden;
+            touch-action: none;
+            transition: background 1.5s ease;
+        }
+
+        /* Falling Flower Particles */
+        .flower {
+            position: absolute;
+            top: -10vh;
+            pointer-events: none;
+            z-index: 1;
+            animation: flowerFall linear forwards;
+            user-select: none;
+        }
+
+        @keyframes flowerFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Glassmorphism Card */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: 35px 25px;
+            width: 92%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+            z-index: 10;
+        }
+
+        h1 {
+            color: white;
+            font-weight: 600;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.4;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            font-weight: 300;
+            opacity: 0.9;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Photo Box (Hidden initially) */
+        .photo-box {
+            width: 100%;
+            height: 0;
+            opacity: 0;
+            overflow: hidden;
+            border-radius: 25px;
+            border: 5px solid white;
+            transition: all 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: scale(0.7);
+            margin-bottom: 0;
+        }
+
+        .photo-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .photo-active {
+            height: 320px;
+            opacity: 1;
+            margin-bottom: 25px;
+            transform: scale(1);
+        }
+
+        /* Interaction Area */
+        .btn-area {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            min-height: 120px;
+            position: relative;
+        }
+
+        button {
+            padding: 14px 38px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 60px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        #yesBtn {
+            background: white;
+            color: var(--midnight);
+            box-shadow: 0 10px 25px rgba(255,255,255,0.2);
+            z-index: 100;
+        }
+
+        #noBtn {
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            border: 1px solid var(--border);
+            position: relative;
+            /* The slow glide effect */
+            transition: left 1.5s cubic-bezier(0.33, 1, 0.68, 1), 
+                        top 1.5s cubic-bezier(0.33, 1, 0.68, 1), 
+                        transform 0.3s ease;
+        }
+
+        .hidden { display: none; }
+
+        .name-reveal {
+            font-size: 2.8rem;
+            font-weight: bold;
+            display: block;
+            color: var(--cyan);
+            text-shadow: 0 0 25px rgba(34, 211, 238, 0.8);
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="flower-field"></div>
+
+    <div class="glass-card">
+        <!-- The Couple Photo (Revealed at the end) -->
+        <div class="photo-box" id="couplePhoto">
+            <img src="couple.jpg" alt="Rahul and Sriza">
+        </div>
+
+        <div id="quiz-ui">
+            <h1 id="question">
+                Do you love me Sriza ??
+                <span class="subtitle" id="sub-text">You are the most beautiful part of my life!</span>
+            </h1>
+            <div class="btn-area">
+                <button id="yesBtn" onclick="celebrate()">Yes</button>
+                <button id="noBtn" 
+                    onmouseover="driftAway()" 
+                    ontouchstart="driftAway(event)">No</button>
+            </div>
+        </div>
+
+        <!-- The Final Reveal -->
+        <div id="success-ui" class="hidden" style="color: white; animation: fadeIn 1s;">
+            <h2 style="font-size: 1.8rem;">I Knew It! ❤️</h2>
+            <p>I know you have lots of love for</p>
+            <span class="name-reveal">Rahul</span>
+            <p style="margin-top: 10px; font-style: italic; color: var(--cyan);">Forever and Always ✨</p>
+        </div>
+    </div>
+
+    <script>
+        const flowers = ['🌹', '🌸', '🌺', '🌻', '🌼', '🌷', '🥀', '💐', '✨', '🏵️'];
+        
+        // Progression of teasing messages
+        const notes = [
+            "Think about it again... 🥺",
+            "Are you really sure? 🧐",
+            "But we are the perfect match! 🌸",
+            "Don't be so mean, Sriza! 😭",
+            "You can't catch this button! 😂",
+            "Just click YES already! ❤️"
+        ];
+
+        let index = 0;
+        const mainText = document.getElementById('question');
+        const subText = document.getElementById('sub-text');
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const photo = document.getElementById('couplePhoto');
+
+        // Spawning the floral rain
+        function rainFlowers() {
+            const f = document.createElement('div');
+            f.className = 'flower';
+            f.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
+            f.style.left = Math.random() * 100 + 'vw';
+            f.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            const dur = Math.random() * 5 + 5;
+            f.style.animationDuration = dur + 's';
+            document.getElementById('flower-field').appendChild(f);
+            setTimeout(() => f.remove(), dur * 1000);
+        }
+        setInterval(rainFlowers, 150);
+
+        // The "No" button movement logic
+        function driftAway(e) {
+            if(e) e.preventDefault();
+
+            // Change messages and grow Yes button
+            if(index < notes.length) {
+                mainText.innerHTML = notes[index] + `<span class="subtitle">Please say yes! 🥺</span>`;
+                index++;
+            }
+            
+            yesBtn.style.transform = `scale(${1 + (index * 0.25)})`;
+
+            // Drift to random coordinates
+            const padding = 100;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+            const targetX = Math.max(padding, Math.random() * maxX);
+            const targetY = Math.max(padding, Math.random() * maxY);
+
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = targetX + 'px';
+            noBtn.style.top = targetY + 'px';
+            noBtn.style.zIndex = '1000';
+        }
+
+        // Final celebration sequence
+        function celebrate() {
+            document.getElementById('quiz-ui').classList.add('hidden');
+            photo.classList.add('photo-active');
+            document.getElementById('success-ui').classList.remove('hidden');
+
+            document.body.style.background = "radial-gradient(circle at center, #0ea5e9 0%, #020617 100%)";
+
+            // Explode 80 random flowers
+            for(let i=0; i<80; i++) {
+                setTimeout(flowerBurst, i * 30);
+            }
+        }
+
+        function flowerBurst() {
+            const f = document.createElement('div');
+            f.innerHTML = flowers[Math.floor(Math.random() * flowers.length)];
+            f.style.position = 'fixed';
+            f.style.left = '50vw';
+            f.style.top = '40vh';
+            f.style.fontSize = (Math.random() * 40 + 20) + 'px';
+            f.style.pointerEvents = 'none';
+            document.body.appendChild(f);
+
+            const angle = Math.random() * Math.PI * 2;
+            const vel = Math.random() * 1000 + 400;
+            const dx = Math.cos(angle) * vel;
+            const dy = Math.sin(angle) * vel;
+
+            f.animate([
+                { transform: 'translate(-50%, -50%) scale(0) rotate(0)', opacity: 1 },
+                { transform: `translate(${dx}px, ${dy}px) scale(2) rotate(720deg)`, opacity: 0 }
+            ], {
+                duration: 2500,
+                easing: 'cubic-bezier(0.1, 0.8, 0.3, 1)'
+            }).onfinish = () => f.remove();
+        }
+    </script>
+</body>
+</html>
